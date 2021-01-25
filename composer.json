@@ -11,6 +11,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "longman/telegram-bot": "^0.64.0"
+        "longman/telegram-bot": "^0.64.0",
+        "vlucas/phpdotenv": "5.3.x-dev"
     }
 }

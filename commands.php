@@ -10,10 +10,10 @@ $getStatus = function(array $params) use ($serviceAddress, $subIds) {
 
     if (!serviceIsAlive($serviceAddress)) {
         // alert everyone
-        $msg = "Service: '{$serviceAddress}' is <b>DEAD</b>. <u>PLEASE TAKE ACTION!</u>";
+        $msg = "Service: '{$serviceAddress}' is <b>DEAD</b>. <u>PLEASE TAKE ACTION!</u>.";
     }
 
-    $msg .= "Time: "  . date("Y-m-d, H:i:s");
+    $msg .= "\nTime: "  . date("Y-m-d, H:i:s");
 
     // alert everyone?
     alertEveryone($subIds, $msg);

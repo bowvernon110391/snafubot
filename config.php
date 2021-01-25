@@ -1,7 +1,14 @@
 <?php
 
-$bot_api_key    = '1548044862:AAFUKrLj5p1o1rQWrpP3tG-mYlhLo9K_sbQ';
-$bot_username   = 'snafup2_bot';
+// read teh env file here I guess
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$bot_api_key    = $_ENV['BOT_API_KEY'];
+$bot_username   = $_ENV['BOT_USERNAME'];
 
 /* $mysql_credentials = [
     'host'     => 'localhost',
@@ -11,8 +18,6 @@ $bot_username   = 'snafup2_bot';
     'database' => 'tgbot',
 ]; */
 
-$serviceAddress = "http://103.233.88.114:911/";
+$serviceAddress = $_ENV['SERVICE_ADDRESS'];
 
-$subIds = [
-    1560492661
-];
+$subIds = explode(",", $_ENV['SUBSCRIBER_IDS'] ?? '');
