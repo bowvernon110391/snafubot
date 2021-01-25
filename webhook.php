@@ -44,7 +44,7 @@ try {
 
     echo "WEBHOOK ended @ " . date('Y-m-d H:i:s') . "\n\n";
 
-    touch("./webhook.log");
+    touch(__DIR__ . "/webhook.log");
 } catch (TelegramException $e) {
     die("Some error happened: " . $e->getMessage());
 }
