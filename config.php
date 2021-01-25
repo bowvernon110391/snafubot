@@ -7,6 +7,8 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
+date_default_timezone_set("Asia/Jakarta");
+
 $bot_api_key    = $_ENV['BOT_API_KEY'];
 $bot_username   = $_ENV['BOT_USERNAME'];
 
