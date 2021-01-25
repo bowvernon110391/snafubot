@@ -1,0 +1,16 @@
+{
+    "name": "bowie/tgbot",
+    "description": "Bot to check server's activity",
+    "type": "project",
+    "license": "GLPv3",
+    "authors": [
+        {
+            "name": "Bow Vernon",
+            "email": "bowvernon110391@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "longman/telegram-bot": "^0.64.0"
+    }
+}
