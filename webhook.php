@@ -16,19 +16,24 @@ try {
     // call update without db
     $telegram->useGetUpdatesWithoutDatabase();
 
-    $response = $telegram->handleGetUpdates();
+    // $response = $telegram->handleGetUpdates();
+    $json = file_get_contents("php://input");
+    $data = json_decode($json);
+
+    $isOk = !is_null($data);
+
 
     echo "WEBHOOK started @ " . date('Y-m-d H:i:s') . "\n";
     echo "=====================================\n";
-    echo "getUpdates is Ok? {$response->isOk()}\n";
-    $result = $response->getResult();
+    echo "getUpdates is Ok? {$isOk}\n";
+    $result = [$data];
 
     // do we get something?
     if (!is_null($result) && count($result)) {
         foreach ($result as $r) {
             // echo the message text
-            echo $r->message["text"] . "\n";
-            $msg = trim($r->message["text"]);
+            echo $r->message->text . "\n";
+            $msg = trim($r->message->text);
 
             if (array_key_exists($msg, $commands)) {
                 // execute it?
@@ -44,7 +49,7 @@ try {
 
     echo "WEBHOOK ended @ " . date('Y-m-d H:i:s') . "\n\n";
 
-    touch(__DIR__ . "/webhook.log");
+    // touch(__DIR__ . "/webhook.log");
 } catch (TelegramException $e) {
     die("Some error happened: " . $e->getMessage());
 }
