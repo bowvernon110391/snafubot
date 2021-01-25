@@ -2,6 +2,8 @@
 
 use Longman\TelegramBot\Exception\TelegramException;
 
+use function PHPSTORM_META\type;
+
 include __DIR__ . '/vendor/autoload.php';
 include __DIR__ . '/config.php';
 include __DIR__ . '/commands.php';
@@ -22,7 +24,7 @@ try {
     $result = $response->getResult();
 
     // do we get something?
-    if (count($result)) {
+    if (!is_null($result) && count($result)) {
         foreach ($result as $r) {
             // echo the message text
             echo $r->message["text"] . "\n";
@@ -41,6 +43,8 @@ try {
     }
 
     echo "WEBHOOK ended @ " . date('Y-m-d H:i:s') . "\n\n";
+
+    touch("./webhook.log");
 } catch (TelegramException $e) {
     die("Some error happened: " . $e->getMessage());
 }
