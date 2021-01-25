@@ -3,52 +3,21 @@
 use Longman\TelegramBot\Request;
 
 include __DIR__ . '/vendor/autoload.php';
-
-$bot_api_key    = '1548044862:AAFUKrLj5p1o1rQWrpP3tG-mYlhLo9K_sbQ';
-$bot_username   = 'snafup2_bot';
-
-/* $mysql_credentials = [
-    'host'     => 'localhost',
-    'port'     => 3306, // optional
-    'user'     => 'localdev',
-    'password' => 'thel0newolf',
-    'database' => 'tgbot',
-]; */
-
-$serviceAddress = "http://103.233.88.114:9119/";
-
-$subIds = [
-    1560492661
-];
-
-// check if the app is reachable
-function serviceIsAlive($address) {
-    $curl = curl_init($address);
-    curl_setopt($curl, CURLOPT_NOBODY, true);
-    // curl_setopt($curl, CURLOPT_PORT, $port);
-    $result = curl_exec($curl);
-
-    var_dump($result);
-
-    if ($result !== false) {
-        // if 404, error then
-        $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-        echo "statusCode: {$statusCode}\n";
-
-        if ($statusCode >= 404) {
-            return false;
-        }
-
-        return true;
-    }
-
-    return false;
-}
-
+include __DIR__ . '/config.php';
+include __DIR__ . '/funcs.php';
 
 // main body
 try {
+    
+    // prevent overlapping
+    $lock = attemptLock();
+    if ($lock === false) {
+        echo "Process already running...bailing.\n";
+        exit();
+    }
+    
+    echo "CRON boT started @ " . date("Y-m-d H:i:s") . "\n";
+    echo "==============================================\n";
     // Create Telegram API object
     $telegram = new Longman\TelegramBot\Telegram($bot_api_key, $bot_username);
 
@@ -64,20 +33,15 @@ try {
     echo "Checking status: {$serviceAddress}\n";
     if (!serviceIsAlive($serviceAddress)) {
         
-        // try to send something
-        foreach ($subIds as $subId) {
-            // send to em all
-            Request::sendMessage([
-                'chat_id' => $subId,
-                'text' => "Service '{$serviceAddress}' is <b>NOT</b> reachable.",
-                'parse_mode' => 'HTML'
-            ]);
-        }
+        alertEveryone($subIds, "Service '{$serviceAddress}' is <b>NOT</b> reachable.");
         echo "status: dead.\n";
     } else {
         echo "status: alive.\n";
     }
     
+    releaseLock($lock);
+
+    echo "CRON boT ended @ " . date("Y-m-d H:i:s") . "\n";
 } catch (Longman\TelegramBot\Exception\TelegramException $e) {
     // log telegram errors
     // echo $e->getMessage();
