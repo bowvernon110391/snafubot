@@ -34,10 +34,12 @@ try {
             // echo the message text
             echo $r->message->text . "\n";
             $msg = trim($r->message->text);
+            $splode = explode(' ', $msg);
+            $cmd = $splode[0];
 
-            if (array_key_exists($msg, $commands)) {
+            if (array_key_exists($cmd, $commands)) {
                 // execute it?
-                $cmd = $commands[$msg];
+                $cmd = $commands[$cmd];
                 $sender = [
                     'id' => $r->message->from->id,
                     'name' => $r->message->from->first_name . ' ' . $r->message->from->last_name

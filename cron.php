@@ -17,7 +17,7 @@ try {
     }
     
     echo "CRON boT started @ " . date("Y-m-d H:i:s") . "\n";
-    echo "==============================================\n";
+    echo "===============\n";
     // Create Telegram API object
     $telegram = new Longman\TelegramBot\Telegram($bot_api_key, $bot_username);
 
@@ -39,7 +39,7 @@ try {
         // if there's group, alert it too!
         if (isset($groupId))
             alertSomeone($groupId, $msg);
-            
+
         echo "status: dead.\n";
     } else {
         echo "status: alive.\n";
