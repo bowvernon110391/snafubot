@@ -32,8 +32,14 @@ try {
 
     echo "Checking status: {$serviceAddress}\n";
     if (!serviceIsAlive($serviceAddress)) {
-        
-        alertEveryone($subIds, "Service '{$serviceAddress}' is <b>NOT</b> reachable.");
+        $msg = "Service '{$serviceAddress}' is <b>NOT</b> reachable.";
+
+        // alert subscribers
+        alertEveryone($subIds, $msg);
+        // if there's group, alert it too!
+        if (isset($groupId))
+            alertSomeone($groupId, $msg);
+            
         echo "status: dead.\n";
     } else {
         echo "status: alive.\n";
