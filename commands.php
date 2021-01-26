@@ -40,8 +40,8 @@ $logTail = function(array $params) {
         // change message
         $msg = "Can't read logs, the log doesn't exist yet I guess :(";
     } else {
-        $msg .= "---------------------SNIP-----------------------\n\n" . $logs;
-        $msg .= "\n---------------------SNAP-----------------------";
+        $msg .= "------------SNIP--------------\n\n" . $logs;
+        $msg .= "\n------------SNAP--------------";
     }
 
     alertSomeone($params['chatId'], $msg);
