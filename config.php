@@ -23,3 +23,5 @@ $bot_username   = $_ENV['BOT_USERNAME'];
 $serviceAddress = $_ENV['SERVICE_ADDRESS'];
 
 $subIds = explode(",", $_ENV['SUBSCRIBER_IDS'] ?? '');
+
+$groupId = $_ENV['GROUP_ID'];

@@ -38,7 +38,17 @@ try {
             if (array_key_exists($msg, $commands)) {
                 // execute it?
                 $cmd = $commands[$msg];
-                $params = explode(' ', $msg);
+                $sender = [
+                    'id' => $r->message->from->id,
+                    'name' => $r->message->from->first_name . ' ' . $r->message->from->last_name
+                ];
+                $chatId = $r->message->chat->id;
+
+                $params = [
+                    'sender' => $sender,
+                    'chatId' => $chatId,
+                    'params' => explode(' ', $msg)
+                ];
 
                 echo "Executing: {$msg}\n";
 
